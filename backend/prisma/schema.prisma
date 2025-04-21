@@ -12,5 +12,5 @@ model Guild {
   modChennel String?
   voiceCategory String?
   voiceLobby String?  
-  nbaChennel
+  nbaChennel String?
 }
