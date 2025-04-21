@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres-bot
+    environment:
+      POSTGRES_USER: discordbot
+      POSTGRES_PASSWORD: discordbot
+      POSTGRES_DB: discordbot
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: backend-bot
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://discordbot:discordbot@db:5432/discordbot?schema=public
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/app
+    command: sh -c "npx prisma migrate deploy && npm run start"
+volumes:
+  postgres_data:
