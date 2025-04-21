@@ -9,6 +9,8 @@ app.get("/ping", (req, res) => {
   res.send({ message: "pong" });
 });
 
+app.use("/guilds", require("./src/routes/guild"));
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
