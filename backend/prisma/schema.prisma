@@ -9,8 +9,8 @@ datasource db {
 
 model Guild {
   guildId  String   @id
-  modChennel String?
+  modChannel String?
   voiceCategory String?
   voiceLobby String?  
-  nbaChennel String?
+  nbaChannel String?
 }
