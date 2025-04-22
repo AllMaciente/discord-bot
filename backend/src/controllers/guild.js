@@ -25,13 +25,10 @@ class ControllerGuild {
   async createGuild(req, res) {
     try {
       const { body } = req;
-      try {
-        const validatedData = GuildSchema.parse(body);
-        const guild = await ServiceGuild.createGuild(validatedData);
-        return res.status(200).json(guild);
-      } catch (validationError) {
-        return res.status(400).json({ error: validationError.errors });
-      }
+
+      const validatedData = GuildSchema.parse(body);
+      const guild = await ServiceGuild.createGuild(validatedData);
+      return res.status(200).json(guild);
     } catch (error) {
       console.error("Error creating guild:", error);
       res.status(500).json({ error: error.message });
