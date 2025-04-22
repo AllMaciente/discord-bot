@@ -25,5 +25,19 @@ services:
     volumes:
       - ./backend:/app
     command: sh -c "npx prisma migrate deploy && npm run start"
+
+  bot:
+    build: ./bot
+    container_name: bot
+    depends_on:
+      - db
+      - backend
+    environment:
+      URL: http://backend:3000
+      TOKEN: ${TOKEN}
+    volumes:
+      - ./bot:/app
+    env_file:
+      - .env
 volumes:
   postgres_data:
