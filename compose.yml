@@ -27,7 +27,9 @@ services:
     command: sh -c "npx prisma migrate deploy && npm run start"
 
   bot:
-    build: ./bot
+    build:
+      context: ./bot
+      dockerfile: Dockerfile
     container_name: bot
     depends_on:
       - db
@@ -39,5 +41,6 @@ services:
       - ./bot:/app
     env_file:
       - .env
+
 volumes:
   postgres_data:
