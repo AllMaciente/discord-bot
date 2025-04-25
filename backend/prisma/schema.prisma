@@ -14,4 +14,12 @@ model Guild {
   voiceCategory String?
   voiceLobby String?  
   nbaChannel String?
+  channels   Channel[]
+}
+model Channel {
+  channelId String @id
+  name String
+  type String
+  guildId String
+  guild   Guild   @relation(fields: [guildId], references: [guildId])
 }
