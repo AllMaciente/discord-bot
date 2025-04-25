@@ -21,5 +21,6 @@ model Channel {
   name String
   type String
   guildId String
+  category String?
   guild   Guild   @relation(fields: [guildId], references: [guildId])
 }

@@ -5,5 +5,6 @@ const ChannelSchema = z.object({
   guildId: z.string(),
   name: z.string(),
   type: z.string(),
+  category: z.string().optional().nullable(),
   action: z.string(),
 });
