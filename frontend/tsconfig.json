@@ -12,6 +12,11 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "jsx": "react-jsx", // Permite o uso de JSX com React
+    "module": "ESNext",
+    "target": "ESNext",
+    "strict": true,
+    "moduleResolution": "node"
   }
 }
