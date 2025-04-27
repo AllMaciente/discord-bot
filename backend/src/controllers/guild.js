@@ -27,7 +27,7 @@ class ControllerGuild {
       const { body } = req;
 
       const validatedData = GuildSchema.parse(body);
-      const guild = await ServiceGuild.createGuild(validatedData);
+      const guild = await ServiceGuild.upsertGuild(validatedData);
       return res.status(200).json(guild);
     } catch (error) {
       console.error("Error creating guild:", error);
@@ -41,7 +41,7 @@ class ControllerGuild {
       const { body } = req;
       try {
         const validatedData = GuildSchema.parse({ ...body, guildId: id });
-        const guild = await ServiceGuild.updateGuild(validatedData);
+        const guild = await ServiceGuild.upsertGuild(validatedData);
         return res.status(200).json(guild);
       } catch (validationError) {
         return res.status(400).json({ error: validationError.errors });

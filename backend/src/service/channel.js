@@ -21,38 +21,13 @@ class ServiceChannel {
       },
     });
   }
-  async createChannel(data) {
-    const existingChannel = await prisma.channel.findUnique({
+  async upsertChannel(data) {
+    return await prisma.channel.upsert({
       where: {
         channelId: data.channelId,
       },
-    });
-
-    if (existingChannel) {
-      throw new Error("Channel already exists");
-    }
-
-    return await prisma.channel.create({
-      data: data,
-    });
-  }
-
-  async updateChannel(id, data) {
-    const existingChannel = await prisma.channel.findUnique({
-      where: {
-        channelId: id,
-      },
-    });
-
-    if (!existingChannel) {
-      throw new Error("Channel not found");
-    }
-
-    return await prisma.channel.update({
-      where: {
-        channelId: id,
-      },
-      data: data,
+      update: data,
+      create: data,
     });
   }
   async deleteChannel(id) {

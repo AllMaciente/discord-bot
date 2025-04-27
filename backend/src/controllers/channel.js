@@ -38,14 +38,11 @@ class ControllerChannel {
       const { action, ...data } = body;
       switch (body.action) {
         case "create":
-          const createdChannel = await ServiceChannel.createChannel(data);
+          const createdChannel = await ServiceChannel.upsertChannel(data);
           return res.status(200).json(createdChannel);
 
         case "update":
-          const updatedChannel = await ServiceChannel.updateChannel(
-            body.channelId,
-            data
-          );
+          const updatedChannel = await ServiceChannel.upsertChannel(data);
           return res.status(200).json(updatedChannel);
 
         case "delete":

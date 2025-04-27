@@ -10,11 +10,17 @@ datasource db {
 model Guild {
   guildId  String   @id
   name     String
-  modChannel String?
-  voiceCategory String?
-  voiceLobby String?  
-  nbaChannel String?
+  icon     String?
+  ownerId  String? 
   channels   Channel[]
+  config     GuildConfig[]
+}
+
+model Member {
+  memberId String @id
+  name     String
+  avatar   String?
+  bot      Boolean
 }
 model Channel {
   channelId String @id
@@ -23,4 +29,12 @@ model Channel {
   guildId String
   category String?
   guild   Guild   @relation(fields: [guildId], references: [guildId])
+}
+
+model GuildConfig {
+  id Int @id
+  guildId String
+  guild Guild @relation(fields: [guildId], references: [guildId])
+  key String
+  value String?
 }
