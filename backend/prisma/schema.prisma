@@ -32,9 +32,12 @@ model Channel {
 }
 
 model GuildConfig {
-  id Int @id
+  id Int @id @default(autoincrement())
   guildId String
   guild Guild @relation(fields: [guildId], references: [guildId])
   key String
   value String?
+  type String?
+
+  @@unique([guildId, key])
 }

@@ -24,7 +24,7 @@ router.get("/", ControllerMember.getMembers);
  * @swagger
  * /members/{id}:
  *   get:
- *      tags:
+ *     tags:
  *         - Member
  *     summary: Busca um membro pelo ID
  *     description: Retorna os detalhes de um membro específico.

@@ -1,1 +1,6 @@
-["modChannel", "voiceCategory", "voiceLobby", "nbaChannel"]
+[
+  { "key": "modChannel", "value": null, "type": "CHANNEL" },
+  { "key": "voiceCategory", "value": null, "type": "CATEGORY" },
+  { "key": "voiceLobby", "value": null, "type": "VOICE" },
+  { "key": "nbaChannel", "value": null, "type": "CHANNEL" }
+]

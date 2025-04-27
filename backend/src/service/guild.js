@@ -1,12 +1,15 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const fs = require("fs");
+const path = require("path");
 
-const DEFAULT_SETTINGS = [
-  "modChannel",
-  "voiceCategory",
-  "voiceLobby",
-  "nbaChannel",
-];
+const SETTINGS_TEMPLATE_PATH = path.resolve(
+  __dirname,
+  "../../settings_template.json"
+);
+const DEFAULT_SETTINGS = JSON.parse(
+  fs.readFileSync(SETTINGS_TEMPLATE_PATH, "utf-8")
+);
 
 class ServiceGuild {
   async getGuilds() {
@@ -71,16 +74,17 @@ class ServiceGuild {
 
     const existingKeys = existingConfigs.map((cfg) => cfg.key);
 
-    const missingKeys = DEFAULT_SETTINGS.filter(
-      (key) => !existingKeys.includes(key)
+    const missingConfigs = DEFAULT_SETTINGS.filter(
+      (config) => !existingKeys.includes(config.key)
     );
 
-    if (missingKeys.length > 0) {
+    if (missingConfigs.length > 0) {
       await prisma.guildConfig.createMany({
-        data: missingKeys.map((key) => ({
+        data: missingConfigs.map((config) => ({
           guildId,
-          key,
-          value: null,
+          key: config.key,
+          value: config.value,
+          type: config.type, // Adicionando o tipo
         })),
         skipDuplicates: true,
       });
