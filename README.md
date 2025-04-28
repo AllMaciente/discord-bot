@@ -35,7 +35,7 @@ TOKEN=seu_token_do_discord_aqui
 
 Aqui está o conteúdo do `docker-compose.yml`:
 
-```
+```yml
 version: "3.8"
 
 services:
@@ -98,7 +98,50 @@ Pronto! O banco, o backend e o bot estarão funcionando.
 
     Vá em Stacks > Add Stack.
 
-    Cole o conteúdo acima (docker-compose.yml) na área de edição.
+    Cole na área de edição.
+
+```yml
+version: "3.8"
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: postgres-bot
+    environment:
+      POSTGRES_USER: discordbot
+      POSTGRES_PASSWORD: discordbot
+      POSTGRES_DB: discordbot
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  backend:
+    image: allan/discord-backend-bot:latest
+    container_name: backend-bot
+    environment:
+      DATABASE_URL: postgres://discordbot:discordbot@db:5432/discordbot?schema=public
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  bot:
+    image: allan/discord-bot:latest
+    container_name: bot
+    environment:
+      URL: http://backend:3000
+      TOKEN: ${TOKEN}
+    depends_on:
+      - db
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+```
 
     Adicione a variável TOKEN no campo Environment variables ou crie o arquivo .env.
 
