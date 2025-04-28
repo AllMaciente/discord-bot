@@ -36,54 +36,7 @@ TOKEN=seu_token_do_discord_aqui
 Aqui está o conteúdo do `docker-compose.yml`:
 
 ```yml
-version: "3.8"
 
-services:
-  db:
-    image: postgres:16-alpine
-    container_name: postgres-bot
-    environment:
-      POSTGRES_USER: discordbot
-      POSTGRES_PASSWORD: discordbot
-      POSTGRES_DB: discordbot
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    restart: unless-stopped
-    networks:
-      - bot-network
-  backend:
-    image: allmaciente/allbot_backend:latest
-    container_name: backend-bot
-    environment:
-      DATABASE_URL: postgres://discordbot:discordbot@db:5432/discordbot?schema=public
-    depends_on:
-      - db
-    ports:
-      - "3000:3000"
-    restart: unless-stopped
-    networks:
-      - app-network
-  bot:
-    image: allmaciente/allbot:latest
-    container_name: bot
-    environment:
-      URL: http://backend:3000
-      TOKEN: ${TOKEN}
-    depends_on:
-      - db
-      - backend
-    env_file:
-      - .env
-    restart: unless-stopped
-    networks:
-      - bot-network
-volumes:
-  postgres_data:
-networks:
-  bot-network:
-    driver: bridge
 ```
 
 ## 🚀 Subindo o projeto
@@ -122,8 +75,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
-    networks:
-      - bot-network
+
   backend:
     image: allmaciente/allbot_backend:latest
     container_name: backend-bot
@@ -134,8 +86,7 @@ services:
     ports:
       - "3000:3000"
     restart: unless-stopped
-    networks:
-      - bot-network
+
   bot:
     image: allmaciente/allbot:latest
     container_name: bot
@@ -146,13 +97,9 @@ services:
       - db
       - backend
     restart: unless-stopped
-    networks:
-      - bot-network
+
 volumes:
   postgres_data:
-networks:
-  bot-network:
-    driver: bridge
 ```
 
     Adicione a variável TOKEN no campo Environment variables ou crie o arquivo .env.
