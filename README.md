@@ -52,7 +52,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
     networks:
-      - app-network
+      - bot-network
   backend:
     image: allmaciente/allbot_backend:latest
     container_name: backend-bot
@@ -78,7 +78,7 @@ services:
       - .env
     restart: unless-stopped
     networks:
-      - app-network
+      - bot-network
 volumes:
   postgres_data:
 networks:
@@ -123,7 +123,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
     networks:
-      - app-network
+      - bot-network
   backend:
     image: allmaciente/allbot_backend:latest
     container_name: backend-bot
@@ -135,7 +135,7 @@ services:
       - "3000:3000"
     restart: unless-stopped
     networks:
-      - app-network
+      - bot-network
   bot:
     image: allmaciente/allbot:latest
     container_name: bot
@@ -147,7 +147,7 @@ services:
       - backend
     restart: unless-stopped
     networks:
-      - app-network
+      - bot-network
 volumes:
   postgres_data:
 networks:
