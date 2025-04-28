@@ -10,8 +10,35 @@ datasource db {
 model Guild {
   guildId  String   @id
   name     String
-  modChannel String?
-  voiceCategory String?
-  voiceLobby String?  
-  nbaChannel String?
+  icon     String?
+  ownerId  String?  // Permitir valores NULL
+  channels   Channel[]
+  config     GuildConfig[]
+}
+
+model Member {
+  memberId String @id
+  name     String
+  displayName String
+  avatar   String?
+  bot      Boolean
+}
+model Channel {
+  channelId String @id
+  name String
+  type String
+  guildId String
+  category String?
+  guild   Guild   @relation(fields: [guildId], references: [guildId])
+}
+
+model GuildConfig {
+  id Int @id @default(autoincrement())
+  guildId String
+  guild Guild @relation(fields: [guildId], references: [guildId])
+  key String
+  value String?
+  type String?
+
+  @@unique([guildId, key])
 }

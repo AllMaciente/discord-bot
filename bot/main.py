@@ -1,14 +1,13 @@
 import os
 
 import discord
-import requests
 from discord.ext import commands
 from dotenv import load_dotenv
 
 load_dotenv()
 intents = discord.Intents.all()
 
-bot = commands.Bot(command_prefix=".", intents=intents)
+bot = commands.Bot(command_prefix="a!", intents=intents)
 
 
 async def load_cogs():
@@ -27,24 +26,24 @@ async def ola(ctx: commands.Context):
     await ctx.reply(f"Olá {user.mention}, tudo bem?")
 
 
-@bot.event
-async def on_ready():
-    print("Logged in as {0.user}".format(bot))
-    await load_cogs()
-    for guild in bot.guilds:
-        print(f"Logged in to server: {guild.name} (ID: {guild.id})")
-        url = f'{os.getenv("URL")}/guilds'
-        if url:
-            data = {"name": guild.name, "guildId": str(guild.id)}
-            try:
-                response = requests.post(url, json=data)
-                print(
-                    f"POST request sent to {url}, response status: {response.status_code}"
-                )
-            except requests.exceptions.RequestException as e:
-                print(f"Failed to send POST request: {e}")
-        else:
-            print("POST_URL is not set in the .env file")
+@bot.command()
+@commands.is_owner()
+async def sync(ctx: commands.Context):
+    """
+    Comando para sincronizar os slash commands do bot.
+    """
+    synced = await bot.tree.sync()
+    await ctx.reply(f"Sincronizado {len(synced)} comandos de barra com sucesso!")
 
 
-bot.run(os.getenv("TOKEN"))
+# Carrega os cogs antes de iniciar o bot
+async def main():
+    async with bot:
+        await load_cogs()
+        await bot.start(os.getenv("TOKEN"))
+
+
+if __name__ == "__main__":
+    import asyncio
+
+    asyncio.run(main())

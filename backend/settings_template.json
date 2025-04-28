@@ -1,0 +1,5 @@
+[
+  { "key": "modChannel", "value": null, "type": "text" },
+  { "key": "voiceCategory", "value": null, "type": "category" },
+  { "key": "voiceLobby", "value": null, "type": "voice" }
+]
