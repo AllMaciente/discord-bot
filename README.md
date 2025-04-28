@@ -51,7 +51,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
-
+    networks:
+      - app-network
   backend:
     image: allmaciente/allbot_backend:latest
     container_name: backend-bot
@@ -62,7 +63,8 @@ services:
     ports:
       - "3000:3000"
     restart: unless-stopped
-
+    networks:
+      - app-network
   bot:
     image: allmaciente/allbot:latest
     container_name: bot
@@ -75,9 +77,13 @@ services:
     env_file:
       - .env
     restart: unless-stopped
-
+    networks:
+      - app-network
 volumes:
   postgres_data:
+networks:
+  bot-network:
+    driver: bridge
 ```
 
 ## 🚀 Subindo o projeto
@@ -116,7 +122,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
-
+    networks:
+      - app-network
   backend:
     image: allmaciente/allbot_backend:latest
     container_name: backend-bot
@@ -127,7 +134,8 @@ services:
     ports:
       - "3000:3000"
     restart: unless-stopped
-
+    networks:
+      - app-network
   bot:
     image: allmaciente/allbot:latest
     container_name: bot
@@ -138,9 +146,13 @@ services:
       - db
       - backend
     restart: unless-stopped
-
+    networks:
+      - app-network
 volumes:
   postgres_data:
+networks:
+  bot-network:
+    driver: bridge
 ```
 
     Adicione a variável TOKEN no campo Environment variables ou crie o arquivo .env.
