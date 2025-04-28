@@ -14,6 +14,13 @@ class ConfigCommands(commands.Cog):
         name="config", description="Comando base para configurar o servidor."
     )
     async def config(self, interaction: discord.Interaction):
+        # Verifica se o usuário tem permissão de administrador
+        if not interaction.user.guild_permissions.administrator:
+            await interaction.response.send_message(
+                "Você não tem permissão para executar este comando.", ephemeral=True
+            )
+            return
+
         # Obtém a URL base da API a partir da variável de ambiente
         api_base_url = os.getenv("URL")
         guild_id = str(interaction.guild.id)
