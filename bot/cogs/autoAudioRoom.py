@@ -15,27 +15,23 @@ class AutoAudioRoom(commands.Cog):
         self.user_channels = {}  # Dicionário para rastrear canais criados para usuários
         self.api_base_url = os.getenv("URL")  # URL base da API
 
-    def get_guild_data(self, guild_id):
+    def get_guild_config(self, guild_id, config_key):
         """
-        Faz uma requisição à API para obter os dados da guild.
+        Faz uma requisição à API para obter uma configuração específica da guild.
         """
-        api_url = f"{self.api_base_url}/guilds/{guild_id}"  # Constrói a URL completa
+        api_url = f"{self.api_base_url}/guilds/config/{guild_id}/{config_key}"  # Constrói a URL completa
         response = requests.get(api_url)
         if response.status_code == 200:
-            return response.json()  # Retorna os dados da guild como um dicionário
+            return response.json().get("value")  # Retorna o valor da configuração
         return None
 
     @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
         guild = member.guild
 
-        # Obtém os dados da guild da API
-        guild_data = self.get_guild_data(guild.id)
-        if not guild_data:
-            return  # Não faz nada se os dados da guild não forem encontrados
-
-        voice_lobby_id = guild_data.get("voiceLobby")
-        voice_category_id = guild_data.get("voiceCategory")
+        # Obtém as configurações específicas da guild da API
+        voice_lobby_id = self.get_guild_config(guild.id, "voiceLobby")
+        voice_category_id = self.get_guild_config(guild.id, "voiceCategory")
 
         # Ignora a funcionalidade se 'voiceLobby' não estiver configurado
         if not voice_lobby_id:

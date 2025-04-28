@@ -19,6 +19,7 @@ model Guild {
 model Member {
   memberId String @id
   name     String
+  displayName String
   avatar   String?
   bot      Boolean
 }

@@ -44,7 +44,8 @@ class SyncInformationBack(commands.Cog):
     def syncMembersForBackend(self, member, action):
         payload = {
             "memberId": str(member.id),
-            "name": member.display_name,
+            "name": member.name,
+            "displayName": member.display_name,
             "avatar": member.avatar.url if member.avatar else None,
             "bot": member.bot,
         }

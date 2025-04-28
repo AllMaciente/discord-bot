@@ -26,6 +26,16 @@ async def ola(ctx: commands.Context):
     await ctx.reply(f"Olá {user.mention}, tudo bem?")
 
 
+@bot.command()
+@commands.is_owner()
+async def sync(ctx: commands.Context):
+    """
+    Comando para sincronizar os slash commands do bot.
+    """
+    synced = await bot.tree.sync()
+    await ctx.reply(f"Sincronizado {len(synced)} comandos de barra com sucesso!")
+
+
 # Carrega os cogs antes de iniciar o bot
 async def main():
     async with bot:
