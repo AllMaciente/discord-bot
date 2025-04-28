@@ -53,7 +53,7 @@ services:
     restart: unless-stopped
 
   backend:
-    image: allan/discord-backend-bot:latest
+    image: allmaciente/allbot_backend:latest
     container_name: backend-bot
     environment:
       DATABASE_URL: postgres://discordbot:discordbot@db:5432/discordbot?schema=public
@@ -64,7 +64,7 @@ services:
     restart: unless-stopped
 
   bot:
-    image: allan/discord-bot:latest
+    image: allmaciente/allbot:latest
     container_name: bot
     environment:
       URL: http://backend:3000
@@ -118,7 +118,7 @@ services:
     restart: unless-stopped
 
   backend:
-    image: allan/discord-backend-bot:latest
+    image: allmaciente/allbot_backend:latest
     container_name: backend-bot
     environment:
       DATABASE_URL: postgres://discordbot:discordbot@db:5432/discordbot?schema=public
@@ -129,7 +129,7 @@ services:
     restart: unless-stopped
 
   bot:
-    image: allan/discord-bot:latest
+    image: allmaciente/allbot:latest
     container_name: bot
     environment:
       URL: http://backend:3000
