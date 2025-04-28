@@ -14,7 +14,7 @@ class ServiceMember {
   async upsertMember(data) {
     const member = await prisma.member.upsert({
       where: {
-        id: data.id,
+        memberId: data.memberId,
       },
       update: data,
       create: data,

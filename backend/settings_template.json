@@ -1,6 +1,6 @@
 [
-  { "key": "modChannel", "value": null, "type": "CHANNEL" },
-  { "key": "voiceCategory", "value": null, "type": "CATEGORY" },
-  { "key": "voiceLobby", "value": null, "type": "VOICE" },
-  { "key": "nbaChannel", "value": null, "type": "CHANNEL" }
+  { "key": "modChannel", "value": null, "type": "text" },
+  { "key": "voiceCategory", "value": null, "type": "category" },
+  { "key": "voiceLobby", "value": null, "type": "voice" },
+  { "key": "nbaChannel", "value": null, "type": "text" }
 ]

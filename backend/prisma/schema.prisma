@@ -11,7 +11,7 @@ model Guild {
   guildId  String   @id
   name     String
   icon     String?
-  ownerId  String? 
+  ownerId  String?  // Permitir valores NULL
   channels   Channel[]
   config     GuildConfig[]
 }

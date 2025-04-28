@@ -1,7 +1,6 @@
 import os
 
 import discord
-import requests
 from discord.ext import commands
 from dotenv import load_dotenv
 
@@ -27,24 +26,14 @@ async def ola(ctx: commands.Context):
     await ctx.reply(f"Olá {user.mention}, tudo bem?")
 
 
-@bot.event
-async def on_ready():
-    print("Logged in as {0.user}".format(bot))
-    await load_cogs()
-    for guild in bot.guilds:
-        print(f"Logged in to server: {guild.name} (ID: {guild.id})")
-        url = f'{os.getenv("URL")}/guilds'
-        if url:
-            data = {"name": guild.name, "guildId": str(guild.id)}
-            try:
-                response = requests.post(url, json=data)
-                print(
-                    f"POST request sent to {url}, response status: {response.status_code}"
-                )
-            except requests.exceptions.RequestException as e:
-                print(f"Failed to send POST request: {e}")
-        else:
-            print("POST_URL is not set in the .env file")
+# Carrega os cogs antes de iniciar o bot
+async def main():
+    async with bot:
+        await load_cogs()
+        await bot.start(os.getenv("TOKEN"))
 
 
-bot.run(os.getenv("TOKEN"))
+if __name__ == "__main__":
+    import asyncio
+
+    asyncio.run(main())
